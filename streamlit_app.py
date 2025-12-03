@@ -44,13 +44,43 @@ st.dataframe(df.head())
 
 col1, col2 = st.columns(2)
 
+# --- PRICE DISTRIBUTION  ---
 with col1:
-    st.subheader("Price Distribution")
-    st.bar_chart(df["price"])
+    st.subheader("Price Distribution (Histogram)")
+    
+    # Create a matplotlib figure
+    fig, ax = plt.subplots()
+    
+    # Plot a proper histogram with a reasonable number of bins (e.g., 15)
+    ax.hist(df["price"], bins=5, edgecolor='black', color='#4CAF50')
+    
+    ax.set_xlabel("Price")
+    ax.set_ylabel("Frequency")
+    ax.set_title("Distribution of Product Prices")
+    
+    # Display the plot in Streamlit
+    st.pyplot(fig)
 
+
+# --- RATING DISTRIBUTION  ---
 with col2:
-    st.subheader("Rating Distribution")
-    st.bar_chart(df["rating"])
+    st.subheader("Rating Distribution (Counts)")
+    
+    # Create a matplotlib figure
+    fig, ax = plt.subplots()
+    
+    # Use value_counts() to get the count of each unique rating (more meaningful for discrete-like data)
+    rating_counts = df["rating"].round(1).value_counts().sort_index()
+    rating_counts.plot(kind='bar', ax=ax, color='#2196F3')
+    
+    ax.set_xlabel("Rating Value")
+    ax.set_ylabel("Count")
+    ax.set_title("Frequency of Product Ratings")
+    plt.xticks(rotation=45) # Rotate x-axis labels for readability
+    
+    # Display the plot in Streamlit
+    st.pyplot(fig)
+
 
 st.subheader("Products by Category")
 category_count = df["category"].value_counts()
