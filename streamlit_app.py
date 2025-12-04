@@ -43,42 +43,33 @@ st.subheader("Product Overview")
 st.dataframe(df.head())
 
 col1, col2 = st.columns(2)
-
 # --- PRICE DISTRIBUTION  ---
 with col1:
     st.subheader("Price Distribution (Histogram)")
     
-    # Create a matplotlib figure
+    
     fig, ax = plt.subplots()
     
-    # Plot a proper histogram with a reasonable number of bins (e.g., 15)
-    ax.hist(df["price"], bins=5, edgecolor='black', color='#4CAF50')
+    ax.hist(df["price"], bins=15, edgecolor='black', color='#4CAF50')
     
     ax.set_xlabel("Price")
     ax.set_ylabel("Frequency")
     ax.set_title("Distribution of Product Prices")
     
-    # Display the plot in Streamlit
     st.pyplot(fig)
-
 
 # --- RATING DISTRIBUTION  ---
 with col2:
-    st.subheader("Rating Distribution (Counts)")
-    
-    # Create a matplotlib figure
+    st.subheader("Distribution of Ratings")
+
     fig, ax = plt.subplots()
-    
-    # Use value_counts() to get the count of each unique rating (more meaningful for discrete-like data)
-    rating_counts = df["rating"].round(1).value_counts().sort_index()
-    rating_counts.plot(kind='bar', ax=ax, color='#2196F3')
-    
-    ax.set_xlabel("Rating Value")
-    ax.set_ylabel("Count")
-    ax.set_title("Frequency of Product Ratings")
-    plt.xticks(rotation=45) # Rotate x-axis labels for readability
-    
-    # Display the plot in Streamlit
+
+    ax.hist(df["rating"], bins=10, edgecolor='black')  
+
+    ax.set_xlabel("Rating")
+    ax.set_ylabel("Frequency")
+    ax.set_title("Histogram of Product Ratings")
+
     st.pyplot(fig)
 
 
